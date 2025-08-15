@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+	char matricula[20];
+	int idade;
+	char curso[50];
+	int categoria;
+	int debito;
+	int dia_semana;
+	int hora;
+
+	printf("--- Biblioteca universitaria ---\n\n");
+    printf("funcionamento das 8h-22h de seg-sex.\n\n");
+	printf("digite seus dados para entrar\n\n");
+    
+	printf("Matrícula: ");
+	scanf("%s", &matricula);
+    
+	printf("Idade: ");
+	scanf("%d", &idade);
+    
+	printf("Curso: ");
+	scanf(" %[^\n]", &curso);
+	
+	printf("\nCategoria do usuário:\n");
+	printf("1 - Aluno de graduação\n");
+	printf("2 - Aluno de pós-graduação\n");
+	printf("3 - Professor\n");
+	printf("4 - Visitante\n");
+	printf("Digite o número correspondente: ");
+	scanf("%d", &categoria);
+    
+	printf("\nEstá em débito com a biblioteca? (1 - Sim / 0 - Não): ");
+	scanf("%d", &debito);
+    
+	printf("\nDia da semana (1 - Segunda, 2 - Terça, ..., 6 - Sábado, 7 - Domingo): ");
+	scanf("%d", &dia_semana);
+    
+	printf("Hora do acesso (0-23): ");
+	scanf("%d", &hora);
+    
+	printf("\n=== Resultado da Verificação ===\n");
+    
+   //Verificação de invalidade
+    if (idade <= 0 || idade > 116) {
+    	printf("Idade invalida! vampiros nao sao bem vindos!\n");
+    		}
+	if (categoria < 1 || categoria > 4) {
+    	printf("Categoria inválida! Digite um número entre 1 e 4.\n");
+    		}
+    if (hora < 0 || hora > 23) {
+    	printf("Hora inválida! Digite um valor entre 0 e 23.\n");
+    	    }
+    
+	if (dia_semana < 1 || dia_semana > 7) {
+    	printf("Dia da semana inválido! Digite um valor entre 1 e 7.\n");
+    		}
+    
+   //verificacao de negacao 
+	switch (categoria) {
+    	case 3:
+        	printf("Acesso autorizado. Professores têm acesso irrestrito.\n");
+        	break;
+case 1:
+        	if (debito) {
+            	printf("Acesso negado. Aluno de graduação com débito.\n");
+        	} else if (dia_semana >= 1 && dia_semana <= 5 && hora >= 8 && hora <= 22) {
+            	printf("Acesso autorizado. Aluno de graduação dentro do horário permitido.\n");
+        	} else {
+            	printf("Acesso negado. Biblioteca fechada para alunos de graduação neste horário.\n");
+            	printf("Horário permitido: Segunda a Sexta, das 8h às 22h.\n");
+        	}
+        	break;
+       	 
+    	case 2:
+        	if (debito) {
+            	printf("Acesso negado. Aluno de pós-graduação com débito.\n");
+        	} else if ((dia_semana >= 1 && dia_semana <= 6) && (hora >= 8 && hora <= 22)) {
+            	printf("Acesso autorizado. Aluno de pós-graduação dentro do horário permitido.\n");
+        	} else {
+            	printf("Acesso negado. Biblioteca fechada para alunos de pós-graduação neste horário.\n");
+            	printf("Horário permitido: Segunda a Sábado, das 8h às 22h.\n");
+        	}
+        	break;
+       	 
+    	case 4:
+        	if (debito) {
+            	printf("Acesso negado. Visitante com débito.\n");
+        	} else if (dia_semana >= 1 && dia_semana <= 5 && hora >= 9 && hora <= 17) {
+            	printf("Acesso autorizado. Visitante dentro do horário permitido.\n");
+} else {
+            	printf("Acesso negado. Biblioteca fechada para visitantes neste horário.\n");
+            	printf("Horário permitido: Segunda a Sexta, das 9h às 17h.\n");
+        	}
+        	break;
+	}
+    
+	return 0;
+}
+
+    
