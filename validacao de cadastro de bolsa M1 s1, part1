@@ -1,0 +1,110 @@
+#include <stdio.h>
+
+int main()
+{
+   int membrosFamiliares;
+   int notaEnem;
+   int alunoPublica;
+   int FamiliarBolsa;
+   int notaSeletivo;
+   int deficiencia;
+   int tipoBolsa;
+   int mediaGeral;
+   float rendaFamiliar;
+   char curso[61];
+   int percapita;
+   float notaFinal;
+   
+   printf("AVALIACAO DE BOLSA UNIVERSITARIA\n");
+   printf("preencha todos os dados abaixo\n\n");
+   
+   
+   printf("digite o numero de membros familiares incluindo voce:\n");
+   scanf("%i", &membrosFamiliares);
+   for(;membrosFamiliares == 0;) {
+   printf("invalido\ntente novamente:");
+   scanf("%i", &membrosFamiliares); }
+   
+   printf("digite sua nota (0-10):");
+   scanf("%i", &notaEnem);
+   for(;notaEnem >10;) {
+       printf("numero invalido!\ndigite novamente:");
+       scanf("%i", &notaEnem);
+   }
+   
+   printf("voce e aluno de escola publica? (1-sim) (0-nao)");
+   scanf("%i", &alunoPublica);
+ switch (alunoPublica) {
+     case 1:
+     printf("digite o numero de familiares bolsitas na universidade:");
+     scanf("%i", &FamiliarBolsa);
+      }
+     
+     for(;alunoPublica > 1;) 
+     { printf("numero invalido!\ndigite novamente:");
+     scanf("%i", &alunoPublica);}
+     
+     
+     printf("digite sua nota do processo seletivo:");
+      scanf("%i", &notaSeletivo );
+      for(;notaSeletivo > 10;) {
+          printf("numero invalido!\ndigite novamente:");
+          scanf("%i", &notaSeletivo);
+      }
+      
+      printf("voce possui alguma deficiencia? (1-sim) (0-nao)");
+      scanf("%i", &deficiencia);
+      for (;deficiencia > 1;) {
+        printf("numero invalido!\ndigite novamente:");
+        scanf("%i", &deficiencia);
+      }
+      printf("qual a modalidade do seu curso? (1-Integral) (2-Parcial)");
+      scanf("%i", &tipoBolsa);
+      for(;tipoBolsa > 3;) { //arruma isso aq e coloca 1 
+          printf("numero invalido!\ndigite novamente:");
+          scanf("%i", &tipoBolsa);
+      }
+      printf("digite sua media geral do ensino medio:");
+      scanf("%i", &mediaGeral);
+      for(;mediaGeral >10;) {
+          printf("numero invalido!\ndigite novamente:");
+          scanf("%i", &mediaGeral);
+          }
+          printf("digite sua renda familiar mensal em R$:");
+          scanf("%f", &rendaFamiliar);
+      printf("digite o nome do curso escolhido:");
+      scanf("%s", &curso);
+     
+       printf("resultado:\n\n");
+      
+      notaFinal = notaSeletivo * 0.4 + notaEnem * 0.3 + mediaGeral * 0.3;
+     
+      if (rendaFamiliar / membrosFamiliares <= 800)
+      percapita = 1;
+      else if (rendaFamiliar / membrosFamiliares > 800)
+      percapita = 0;
+      else if (notaFinal >= 8 )
+      notaFinal = 1;
+      else if (notaFinal < 8)
+      notaFinal = 0;
+      else if (membrosFamiliares = 0)
+      membrosFamiliares = 1;
+      else if (membrosFamiliares > 0)
+      membrosFamiliares = 0;
+      
+      if (percapita == 1 &&
+      notaFinal == 1 &&
+      membrosFamiliares == 1)
+      printf("aprovado na bolsa 100");
+          
+         
+      
+       
+      
+      
+    
+   
+    
+    
+    return 0;
+}
