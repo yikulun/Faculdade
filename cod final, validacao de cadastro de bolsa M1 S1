@@ -1,0 +1,198 @@
+include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF); }
+
+int validarCurso(const char *curso) {
+    for (int i = 0; curso[i] != '\0'; i++) {
+        if (!isalpha(curso[i]) && !isspace(curso[i])) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+void coletarDados(float *renda_familiar, float *nota_seletivo, float *nota_enem, 
+                 float *media_ensino_medio, int *possui_deficiencia, int *rede_publica, 
+                 int *num_pessoas, int *num_familiares_bolsistas, int *tipo_bolsa, 
+                 char *curso_pretendido) {
+    
+    printf("=== Sistema de Avaliação de Bolsas Universitárias ===\n");
+    
+    
+    do {
+        printf("1. Renda familiar mensal (R$): ");
+        scanf("%f", renda_familiar);
+        if (*renda_familiar <= 0) {
+            printf("Numero invalido digite novamente:\n");
+        }
+    } while (*renda_familiar <= 0);
+    
+    
+    do {
+        printf("2. Nota do Processo Seletivo Interno (0 a 10): ");
+        scanf("%f", nota_seletivo);
+        if (*nota_seletivo < 0 || *nota_seletivo > 10) {
+            printf("A nota deve estar entre 0 e 10.\n");
+        }
+    } while (*nota_seletivo < 0 || *nota_seletivo > 10);
+    
+    
+    do {
+        printf("3. Nota do ENEM (0 a 10): ");
+        scanf("%f", nota_enem);
+        if (*nota_enem < 0 || *nota_enem > 10) {
+            printf("A nota deve estar entre 0 e 10.\n");
+        }
+        
+        
+        
+        
+    } while (*nota_enem < 0 || *nota_enem > 10);
+    
+    
+    do {
+        printf("4. Média Geral do Ensino Médio (0 a 10): ");
+        scanf("%f", media_ensino_medio);
+        if (*media_ensino_medio < 0 || *media_ensino_medio > 10) {
+            printf("A média deve estar entre 0 e 10.\n");
+        }
+    } while (*media_ensino_medio < 0 || *media_ensino_medio > 10);
+    
+    
+    do {
+        printf("5. Possui deficiência? (1-Sim, 0-Não): ");
+        scanf("%d", possui_deficiencia);
+        if (*possui_deficiencia != 0 && *possui_deficiencia != 1) {
+            printf("numero invalido digite novamente:.\n");
+        }
+    } while (*possui_deficiencia != 0 && *possui_deficiencia != 1);
+    
+    
+    do {
+        printf("6. É aluno da rede pública? (1-Sim, 0-Não): ");
+        scanf("%d", rede_publica);
+        if (*rede_publica != 0 && *rede_publica != 1) {
+            printf("numero invalido digite novamente:.\n");
+        }
+    } while (*rede_publica != 0 && *rede_publica != 1);
+    
+    
+    do {
+        printf("7. Número de pessoas na família: ");
+        scanf("%d", num_pessoas);
+        if (*num_pessoas <= 0) {
+            printf("O número deve ser maior que zero.\n");
+        }
+    } while (*num_pessoas <= 0);
+    
+    
+    do {
+        printf("8. Número de familiares bolsistas na universidade: ");
+        scanf("%d", num_familiares_bolsistas);
+        if (*num_familiares_bolsistas < 0) {
+            printf("O número não pode ser negativo.\n");
+        }
+    } while (*num_familiares_bolsistas < 0);
+    
+    
+    do {
+        printf("9. Tipo de bolsa desejada (1-INTEGRAL, 2-PARCIAL): ");
+        scanf("%d", tipo_bolsa);
+        if (*tipo_bolsa != 1 && *tipo_bolsa != 2) {
+            printf("Digite 1 para INTEGRAL ou 2 para PARCIAL.\n");
+        }
+    } while (*tipo_bolsa != 1 && *tipo_bolsa != 2);
+    
+    
+
+    limparBuffer();
+    do {
+        printf("10. Curso pretendido: ");
+        fgets(curso_pretendido, 100, stdin);
+        curso_pretendido[strcspn(curso_pretendido, "\n")] = '\0';
+        if (!validarCurso(curso_pretendido)) {
+            printf("O curso deve conter apenas letras e espaços.\n");
+        }
+    } while (!validarCurso(curso_pretendido));
+    
+    printf("\nPressione Enter para ver o resultado...");
+    limparBuffer();
+    getchar(); 
+}
+
+
+void avaliarBolsa(float renda_familiar, float nota_seletivo, float nota_enem, 
+                 float media_ensino_medio, int possui_deficiencia, int rede_publica, 
+                 int num_pessoas, int num_familiares_bolsistas, int tipo_bolsa, 
+                 const char *curso_pretendido) {
+    
+    
+    float renda_per_capita = renda_familiar / num_pessoas;
+    float nota_final = (nota_seletivo * 0.4) + (nota_enem * 0.3) + (media_ensino_medio * 0.3);
+    
+    
+    printf("\033[H\033[J");  
+    
+    printf("\n=== Resultado da Avaliação ===\n");
+    printf("Curso pretendido: %s\n", curso_pretendido);
+    printf("Nota Final: %.2f\n", nota_final);
+    printf("Renda per capita: R$ %.2f\n", renda_per_capita);
+    
+    
+    if (tipo_bolsa == 1) { 
+        if (renda_per_capita <= 800 && 
+            nota_final >= 8.0 && 
+            (possui_deficiencia == 1 || rede_publica == 1) && 
+            num_familiares_bolsistas == 0) {
+            printf("\nResultado: Bolsa Integral CONCEDIDA!\n");
+        } else {
+            printf("\nResultado: Bolsa Integral INDEFERIDA. Motivos:\n");
+            if (renda_per_capita > 800) printf("- Renda per capita acima de R$ 800\n");
+            if (nota_final < 8.0) printf("- Nota final abaixo de 8.0\n");
+            if (possui_deficiencia == 0 && rede_publica == 0) printf("- Não possui deficiência nem é da rede pública\n");
+            if (num_familiares_bolsistas > 0) printf("- Possui familiares bolsistas na universidade\n");
+        }
+    } else { 
+        if (renda_per_capita <= 1600 && 
+            nota_final >= 6.0 && 
+            num_familiares_bolsistas <= 1) {
+            
+            if (rede_publica == 0 && possui_deficiencia == 0 && nota_final < 7.5) {
+                printf("\nResultado: Bolsa Parcial INDEFERIDA. Motivos:\n");
+                printf("- Não é da rede pública nem possui deficiência e nota final abaixo de 7.5\n");
+            } else {
+                printf("\nResultado: Bolsa Parcial CONCEDIDA (50%)!\n");
+            }
+        } else {
+            printf("\nResultado: Bolsa Parcial INDEFERIDA. Motivos:\n");
+            if (renda_per_capita > 1600) printf("- Renda per capita acima de R$ 1600\n");
+            if (nota_final < 6.0) printf("- Nota final abaixo de 6.0\n");
+            if (num_familiares_bolsistas > 1) printf("- Possui mais de 1 familiar bolsista\n");
+        }
+    }
+}
+
+int main() {
+    
+    float renda_familiar, nota_seletivo, nota_enem, media_ensino_medio;
+    int possui_deficiencia, rede_publica, num_pessoas, num_familiares_bolsistas, tipo_bolsa;
+    char curso_pretendido[100];
+    
+    
+    coletarDados(&renda_familiar, &nota_seletivo, &nota_enem, &media_ensino_medio,
+                &possui_deficiencia, &rede_publica, &num_pessoas,
+                &num_familiares_bolsistas, &tipo_bolsa, curso_pretendido);
+    
+    
+    avaliarBolsa(renda_familiar, nota_seletivo, nota_enem, media_ensino_medio,
+                possui_deficiencia, rede_publica, num_pessoas,
+                num_familiares_bolsistas, tipo_bolsa, curso_pretendido);
+    
+    return 0;
+}
