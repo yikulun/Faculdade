@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+struct Bicicleta {
+    
+  string modelo, CompQuadro, CompGuidao, Compselim;
+  string categoria, cambio, freios, pedivela, cubo, rodas;
+  string tamanho, valor, ValorFrete;
+ 
+    
+};
+
+int main()
+{
+   int a;
+   Bicicleta triban;
+   
+  triban.modelo="triban RC100";
+  triban.categoria="Road bike";
+  triban.tamanho="50,52,55";
+  triban.valor="1999";
+  triban.ValorFrete="170";
+  triban.CompQuadro="aluminio 6062, com tratamento t4 e t6";
+  triban.CompGuidao="aluminio, com mesa de 80mm";
+  triban.Compselim="canote em aluminio e selim slim gta";
+  triban.cambio="shimano tourneyn tx 7vl";
+  triban.freios="ferradura side pull gta";
+  triban.pedivela="shimano tourney single 42 dentes";
+  triban.cubo="veloforce HG esferas soltas, 32 furos, disco 6 furos";
+  triban.rodas="aro 700c";
+
+  
+  cout <<"---lista das bicicletas disponiveis:"<<"\n\n";
+  cout <<"Modelo:"<<triban.modelo<<"\n";
+  cout<<"Categoria:"<<triban.categoria<<"\n"<<"tamanhos:"<<triban.tamanho<<"\n"<<"Valor="<<triban.valor<<"\n"<<"frete a partir de "<<triban.ValorFrete<<"\n\n\n";
+  cout<<"1.Informacoes tecnicas"<<"\n";
+  cout<<"selecione:"<<"\n";
+  cin>> a;
+  
+switch (a){
+    case 1: cout<<"Quadro:"<<triban.CompQuadro<<"\n"<<"guidao:"<<triban.CompGuidao<<"\n"<<triban.Compselim<<"\n"<<"transmissao:"<<triban.cambio<<"\n"<<"freios:"<<triban.freios<<"\n"
+    <<"pedivela:"<<triban.pedivela<<"\n"<<"cubo:"<<triban.cubo<<"\n"<<"rodas:"<<triban.rodas<<endl;
+};
+   
+   
+    return 0;
+}
