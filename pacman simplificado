@@ -24,7 +24,16 @@ posicao jogador = {1,1}; // guardar dados do jogador
  bool parede (int l, int c) { 
      return mapa [l][c] != '#'; // impede que o jogadro saia das paredes
  }
-     
+
+int pontosRestantes = 0;
+void contarPontos () {
+    for (auto &linha : mapa) { // cria uma variavel que vai percorrer todo o endereco das strings do vetor sem copia-la
+        for (char ch : linha) { //percorre cara caracter da linha
+            if (ch == '.') pontosRestantes++; // soma os pontos
+        }
+    }
+} 
+ int pontos = 0;
 void movjog (char cmd) { 
     posicao prox = jogador; //pega a posicao inicial do jogador
     if (cmd == 'w') prox.l--; //cima vrau, pega a linha e coluna e substrai ou soma a posicao
@@ -32,31 +41,88 @@ void movjog (char cmd) {
     if (cmd == 'a') prox.c--; //esquerda
     if (cmd == 'd') prox.c++; //direta
     
-    if (parede(next.l, next.c)) {
-        jogador == next; // pro jogador nao sair do lugar se for parede
-        
+    if (parede(prox.l, prox.c)) {
+        jogador = prox; // pro jogador nao sair do lugar se for parede
+       
         if (mapa[jogador.l][jogador.c]=='.') {
-            mapa[jogador.l][jogador.c]==' ' // comer pontos
+            mapa[jogador.l][jogador.c]=' ' ;// comer pontos
+            pontos += 1;
+            pontosRestantes--;
         }
     }
 }
- void desenhar() {
+ 
+vector <posicao> fantasma;
+void posfantasma () {
+    fantasma.clear(); // limpando o vetor
+    fantasma.push_back ({1,20}); // push_back adiciona algo no vetor, e as coordenadas indicam onde
+    fantasma.push_back ({7,18});
+    
+}
+
+void movfantasma () {
+    for (auto &f : fantasma) {// to com preguica de por srand
+        int dir = rand() %4; // da um valor aleatorio no intervalo da %
+        posicao prox = f;
+        if (dir == 0) prox.l--; // cima
+        if (dir == 1) prox.l++; // baixo
+        if (dir == 2) prox.c--; // esquerda
+        if (dir == 3) prox.c++; // direita
+
+        if (parede(prox.l, prox.c) && mapa[prox.l][prox.c] != '.') {
+            f = prox; // mover fantasma
+        }       
+    }
+}
+void desenhar() {
     system ("clear"); // no linux limpa a tela 
     vector <string> img = mapa;// copiar o mapa pra tela
     img [jogador.l][jogador.c] = 'p'; // pondo a peca do jogador
     for (auto &line : img ) cout <<line<<"\n";
- }
+    cout<<"pontos:"<<pontos<<"\n"<<"pontos restantes:"<<pontosRestantes<< "\n";
+ for (auto &f : fantasma) {
+        img[f.l][f.c] = 'G';
+    }
+}
+
 
  int main (){ 
-  
+  contarPontos (); // chamando a funcao pro contador nao comecar zerado
+  fantasma;
+  srand (time(0)); // coloquei fds
+      
       while (true) {
          desenhar ();
-         cout<<"use w,s,d,a para mover o jogador e q para sair";
+         cout<<"use w,s,d,a para mover o jogador e 'q' para sair----\n";
          char cmd;
          cin >> cmd;
          if (cmd == 'q') break;
         movjog(cmd);
      }
+
+for (auto &f : fantasma) {
+  if (f.l == jogador.l && f.c == jogador.c) {
+        system("clear");
+        cout << "Voce foi pego por um fantasma! Game Over.\n";
+        cout << "pontos: " << pontos;
+        return 0;
+    }
+}
+
+     
+     if (pontosRestantes == 76) {
+    system("clear");
+    cout << "Parabens!\n";
+    cout << "Pontuacao final: " << pontos << "\n"; // sla ta com problema essa porra q n ta verificando direito
+
+}
+
+
+
+     
+     
+     
+     
      
      return 0;
  }
