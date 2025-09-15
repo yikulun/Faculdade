@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string> 
-
+#include <cstdlib> 
+#include <ctime> 
 using namespace std;
     
 
@@ -55,8 +56,8 @@ void movjog (char cmd) {
 vector <posicao> fantasma;
 void posfantasma () {
     fantasma.clear(); // limpando o vetor
-    fantasma.push_back ({1,20}); // push_back adiciona algo no vetor, e as coordenadas indicam onde
-    fantasma.push_back ({7,18});
+    fantasma.push_back ({2,7});//push_back adiciona algo no vetor e as coordenadas dizem onde
+    fantasma.push_back ({6,10});
     
 }
 
@@ -75,54 +76,57 @@ void movfantasma () {
     }
 }
 void desenhar() {
-    system ("clear"); // no linux limpa a tela 
-    vector <string> img = mapa;// copiar o mapa pra tela
-    img [jogador.l][jogador.c] = 'p'; // pondo a peca do jogador
-    for (auto &line : img ) cout <<line<<"\n";
-    cout<<"pontos:"<<pontos<<"\n"<<"pontos restantes:"<<pontosRestantes<< "\n";
- for (auto &f : fantasma) {
+    system("clear"); 
+    vector<string> img = mapa;
+
+    img[jogador.l][jogador.c] = 'P'; 
+    for (auto &f : fantasma) { //desenhando o personagem e o fantasma no mapa
         img[f.l][f.c] = 'G';
     }
+
+    for (auto &line : img) cout << line << "\n";
+    cout << "pontos: " << pontos << "\n";
+    cout << "pontos restantes: " << pontosRestantes << "\n";
 }
 
 
  int main (){ 
   contarPontos (); // chamando a funcao pro contador nao comecar zerado
-  fantasma;
+  posfantasma();
   srand (time(0)); // coloquei fds
       
       while (true) {
-         desenhar ();
-         cout<<"use w,s,d,a para mover o jogador e 'q' para sair----\n";
-         char cmd;
-         cin >> cmd;
-         if (cmd == 'q') break;
+        desenhar();
+        cout << "use w,s,d,a para mover o jogador e 'q' para sair----\n";
+        char cmd;
+        cin >> cmd;
+
+        if (cmd == 'q') {
+            break;
+        }
+
         movjog(cmd);
-     }
+        movfantasma(); 
 
-for (auto &f : fantasma) {
-  if (f.l == jogador.l && f.c == jogador.c) {
-        system("clear");
-        cout << "Voce foi pego por um fantasma! Game Over.\n";
-        cout << "pontos: " << pontos;
-        return 0;
+        
+        for (auto& f : fantasma) { //colisao dos fantasmas
+            if (f.l == jogador.l && f.c == jogador.c) {
+                system("clear");
+                cout << "Voce foi pego por um fantasma! Game Over.\n";
+                cout << "Pontos: " << pontos << "\n";
+                return 0; 
+            }
+        }
+
+        if (pontosRestantes == 0) { 
+            system("clear");
+            cout << "Parabens!\n";
+            cout << "Pontuacao final: " << pontos << "\n";
+            return 0; // Termina o jogo
+        }
     }
-}
-
-     
-     if (pontosRestantes == 76) {
-    system("clear");
-    cout << "Parabens!\n";
-    cout << "Pontuacao final: " << pontos << "\n"; // sla ta com problema essa porra q n ta verificando direito
-
-}
 
 
 
-     
-     
-     
-     
-     
-     return 0;
+      return 0;
  }
