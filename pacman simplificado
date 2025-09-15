@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string> 
+
+using namespace std;
+    
+
+vector<string> mapa = { // mapa com vetor pq sim <3 facilitando a vida
+     "#####################",
+     "##...####...........#",
+     "#..#......######....#",
+     "#........###.....##.#",
+     "####..#..#.....######",
+     "###........###......#",
+     "#####..........###..#",
+     "###......######.....#",
+     "#####################",
+  } ;   
+     
+struct posicao { int l, c;};
+posicao jogador = {1,1}; // guardar dados do jogador
+     
+     
+ bool parede (int l, int c) { 
+     return mapa [l][c] != '#'; // impede que o jogadro saia das paredes
+ }
+     
+void movjog (char cmd) { 
+    posicao prox = jogador; //pega a posicao inicial do jogador
+    if (cmd == 'w') prox.l--; //cima vrau, pega a linha e coluna e substrai ou soma a posicao
+    if (cmd == 's') prox.l++; //baixo
+    if (cmd == 'a') prox.c--; //esquerda
+    if (cmd == 'd') prox.c++; //direta
+    
+    if (parede(next.l, next.c)) {
+        jogador == next; // pro jogador nao sair do lugar se for parede
+        
+        if (mapa[jogador.l][jogador.c]=='.') {
+            mapa[jogador.l][jogador.c]==' ' // comer pontos
+        }
+    }
+}
+ void desenhar() {
+    system ("clear"); // no linux limpa a tela 
+    vector <string> img = mapa;// copiar o mapa pra tela
+    img [jogador.l][jogador.c] = 'p'; // pondo a peca do jogador
+    for (auto &line : img ) cout <<line<<"\n";
+ }
+
+ int main (){ 
+  
+      while (true) {
+         desenhar ();
+         cout<<"use w,s,d,a para mover o jogador e q para sair";
+         char cmd;
+         cin >> cmd;
+         if (cmd == 'q') break;
+        movjog(cmd);
+     }
+     
+     return 0;
+ }
