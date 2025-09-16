@@ -1,0 +1,19 @@
+// operadores ternarios
+#include <iostream>
+ 
+using namespace std;
+
+int main()
+{
+    //(exprecao) ? valor1 : valor2 - se for true executa 1 senao 2
+int saldo = 2000;
+int preco1 = 2100;
+
+int escolha;
+cout <<"====escolha o produto===="<<"\n"<<"1-triban rc100"<<"\n"<<"2-caloi explorer sport"<<"\n";
+cin >> escolha;
+switch (escolha) {
+    case 1: (saldo >= preco1) ? cout <<"compra efetuada"<<"\n" : cout <<"saldo insuficiente:"<<saldo-preco1<<endl;  
+}
+    return 0;
+}
