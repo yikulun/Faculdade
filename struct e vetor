@@ -1,0 +1,68 @@
+//modelo de impressao com struct e vetor
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void infos () {  
+
+
+struct Bicicleta {
+    
+  string modelo, CompQuadro, CompGuidao, Compselim;
+  string categoria, cambio, freios, pedivela, cubo, rodas;
+  string tamanho, valor, ValorFrete;
+};   
+ Bicicleta triban;
+ 
+  triban.modelo="triban RC100";
+  triban.categoria="Road bike";
+  triban.tamanho="50,52,55";
+  triban.valor="1999";
+  triban.ValorFrete="170";
+  triban.CompQuadro="aluminio 6062, com tratamento t4 e t6";
+  triban.CompGuidao="aluminio, com mesa de 80mm";
+  triban.Compselim="canote em aluminio e selim slim gta";
+  triban.cambio="shimano tourneyn tx 7vl";
+  triban.freios="ferradura side pull gta";
+  triban.pedivela="shimano tourney single 42 dentes";
+  triban.cubo="veloforce HG esferas soltas, 32 furos, disco 6 furos";
+  triban.rodas="aro 700c";  
+  
+  vector<string> dados = { 
+     
+  triban.modelo,
+  triban.categoria,
+  triban.tamanho,
+  triban.valor,
+  triban.ValorFrete,
+  triban.CompQuadro,
+  triban.CompGuidao,
+  triban.Compselim,
+  triban.cambio,
+  triban.freios,
+  triban.pedivela,
+  triban.cubo,
+  triban.rodas,    
+  };
+  
+  for (auto &x : dados ) {
+      cout << x <<endl;
+  };
+    
+}
+
+int main()
+{
+    //(exprecao) ? valor1 : valor2 - se for true executa 1 senao 2
+int saldo = 2000;
+int preco1 = 2100;
+int escolha;
+
+cout <<"====escolha o produto===="<<"\n"<<"1-triban rc100"<<"\n"<<"2-caloi explorer sport"<<"\n";
+cin >> escolha;
+switch (escolha) {
+    case 1: infos (); break;
+}
+    return 0;
+}
